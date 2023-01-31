@@ -17,11 +17,6 @@ public static class IndexController
     internal static IResult GetLightsConfigurationApi(ICommunicationServer server)
     {
         server.SendChannelActivationMessage();
-        //_ = hub.SendMessage(new NotificationTransport()
-        //{
-        //    Message = "",
-        //    MessageType = "string"
-        //});
         return Results.Ok();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BlazorWasmSignalR.Shared;
 
-public interface IHubClient
+public interface IHub
 {
     /// <summary>
     /// Receives the message.
@@ -8,12 +8,5 @@ public interface IHubClient
     /// <param name="message">The message.</param>
     /// <returns></returns>
     Task Message(object message);
-
-    /// <summary>
-    /// Sends the message.
-    /// </summary>
-    /// <param name="message">The message.</param>
-    /// <returns></returns>
-    Task SendMessage(object message);
 }
 

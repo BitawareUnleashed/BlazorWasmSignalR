@@ -24,7 +24,7 @@ public partial class Index
 
         hubConnection.On<NotificationTransport>("Message", message =>
             {
-                messages.Add(message.Message);
+                messages.Add(message.Message + " - Index");
                 StateHasChanged();
             });
         await hubConnection.StartAsync();

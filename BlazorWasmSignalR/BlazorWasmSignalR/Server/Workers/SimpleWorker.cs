@@ -1,26 +1,30 @@
-﻿using BlazorWasmSignalR.Server.Models.Hub;
+﻿using BlazorWasmSignalR.Server.Models;
+using BlazorWasmSignalR.Server.Models.Hub;
+using BlazorWasmSignalR.Shared;
 using BlazorWasmSignalR.Shared.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace BlazorWasmSignalR.Server.Workers;
-//public class SimpleWorker
-//{
-//    private CommunicationHub hub;
+public class SimpleWorker
+{
+    private HubConnection? hubConnection;
 
-//    public SimpleWorker(CommunicationHub hub)
-//    {
-//        this.hub = hub;
-//    }
-//    public async Task ExecuteAsync(CancellationToken stoppingToken)
-//    {
-//        while (!stoppingToken.IsCancellationRequested)
-//        {
-//            // eseguire la logica del servizio qui
-//            await Task.Delay(1000, stoppingToken);
-//            hub?.SendMessage(new NotificationTransport()
-//            {
-//                Message = "My message",
-//                MessageType = "MESSAGE"
-//            });
-//        }
-//    }
-//}
+    public void SetHub(HubConnection hub)
+    {
+        this.hubConnection = hub;
+    }
+
+    public async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            // eseguire la logica del servizio qui
+            await Task.Delay(1000, stoppingToken);
+            hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+            {
+                Message = "My message",
+                MessageType = "MESSAGE"
+            });
+        }
+    }
+}

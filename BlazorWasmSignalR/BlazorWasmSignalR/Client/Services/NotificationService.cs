@@ -110,7 +110,7 @@ public class NotificationService
     /// <exception cref="InvalidDataException"></exception>
     private async Task InitializeNotifications()
     {
-        IHubClient hubClientMethodsNames;
+        IHub hubClientMethodsNames;
         HubConnection = new HubConnectionBuilder()
             .WithUrl(new Uri("https://localhost:7273/communicationhub"))
             .WithAutomaticReconnect(reconnectionTimeouts)
@@ -123,10 +123,10 @@ public class NotificationService
                 var content = JsonSerializer.Deserialize<string>(context.Message!);
                 if (content is not null)
                 {
-                    MessageChanged?.Invoke(this, content);
+                    MessageChanged?.Invoke(this, content + " - Service");
                 }
             }
-            MessageChanged?.Invoke(this, context.Message);
+            MessageChanged?.Invoke(this, context.Message + " - Service");
         });
         await HubConnection.StartAsync();
     }

@@ -1,14 +1,10 @@
 using BlazorWasmSignalR.Server.Controllers;
 using BlazorWasmSignalR.Server.Models;
 using BlazorWasmSignalR.Server.Models.Hub;
-using BlazorWasmSignalR.Server.Workers;
-using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Hosting;
-using Microsoft.JSInterop;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using BlazorWasmSignalR.Server.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,9 +50,11 @@ builder.Services.AddSignalR(
         options.PayloadSerializerOptions.WriteIndented = true;
     });
 
-//builder.Services.AddSingleton<SimpleWorker>();
 
-builder.Services.AddScoped<ICommunicationServer, CommunicationServer>();
+
+builder.Services.AddSingleton<ICommunicationServer, CommunicationServer>();
+
+builder.Services.AddSingleton<SimpleWorker>();
 
 var app = builder.Build();
 

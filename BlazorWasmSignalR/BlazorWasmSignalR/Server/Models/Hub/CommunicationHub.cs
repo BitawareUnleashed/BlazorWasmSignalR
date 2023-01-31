@@ -3,39 +3,14 @@ using BlazorWasmSignalR.Shared;
 using Microsoft.AspNetCore.SignalR;
 using System;
 
-namespace BlazorWasmSignalR.Server.Models.Hub
+namespace BlazorWasmSignalR.Server.Models.Hub;
+
+public class CommunicationHub : Hub<IHub>
 {
-    public class CommunicationHub : Hub<IHubClient>
+    public async Task Message(object message) => await Clients.All.Message(message);
+
+    public override async Task OnConnectedAsync()
     {
-        #region Fields
-        // definire gruppi dinamici
-
-        //private SimpleWorker worker;
-        #endregion
-
-        #region Constructors
-
-        #endregion
-
-        #region Methods and callbacks
-
-        /// <summary>
-        /// Sends the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public async Task SendMessage(object message) => await Clients.All.SendMessage(message);
-
-        /// <summary>
-        /// Receives the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public async Task Message(object message) => await Clients.All.Message(message);
-
-        #endregion
-
-        public override async Task OnConnectedAsync()
-        {
-            await base.OnConnectedAsync();
-        }
+        await base.OnConnectedAsync();
     }
 }

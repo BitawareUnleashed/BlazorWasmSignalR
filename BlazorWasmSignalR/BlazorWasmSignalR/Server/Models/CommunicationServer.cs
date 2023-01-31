@@ -1,4 +1,5 @@
-﻿using BlazorWasmSignalR.Shared;
+﻿using BlazorWasmSignalR.Server.Workers;
+using BlazorWasmSignalR.Shared;
 using BlazorWasmSignalR.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -9,14 +10,14 @@ namespace BlazorWasmSignalR.Server.Models;
 
 public class CommunicationServer : ICommunicationServer
 {
-    
-    #region Constructor
+    SimpleWorker worker;
 
-    public CommunicationServer(NavigationManager Navigator)
+    #region Constructor
+    public CommunicationServer(SimpleWorker worker)
     {
+        this.worker = worker;
         Init("https://localhost:7273/communicationhub");
     }
-
     #endregion
 
     #region Fields
@@ -43,33 +44,7 @@ public class CommunicationServer : ICommunicationServer
 
     #endregion
 
-    #region Properties
-
-    #endregion
-
     #region Methods and callbacks
-
-    /// <summary>
-    /// Callback of client OnEventReceived.
-    /// </summary>
-    /// <param name="obj">The object.</param>
-    private void ClientOnEventReceived(object obj)
-    {
-        var objectTypeName = string.Empty;
-        var jsonSerializedObject = JsonSerializer.Serialize(obj);
-        if (obj.GetType().ToString().LastIndexOf('.') > 0)
-        {
-            objectTypeName = obj.GetType().ToString()[(obj.GetType().ToString().LastIndexOf('.') + 1)..];
-        }
-
-        var toSend = new NotificationTransport
-        {
-            Message = jsonSerializedObject,
-            MessageType = objectTypeName,
-        };
-        Send(toSend);
-    }
-
     /// <summary>
     /// Initializes the SignalR connection with a configuration base address.
     /// </summary>
@@ -81,10 +56,12 @@ public class CommunicationServer : ICommunicationServer
                        .WithAutomaticReconnect(reconnectionTimeouts)
                        .Build();
         await hubConnection.StartAsync();
+        this.worker.SetHub(hubConnection);
+        await worker.ExecuteAsync(new CancellationToken());
     }
 
     /// <inheritdoc cref="ICommunicationServer"/>>
-    public void Send(object toSend) => hubConnection?.SendAsync(nameof(IHubClient.Message), toSend);
+    public void Send(object toSend) => hubConnection?.SendAsync(nameof(IHub.Message), toSend);
 
     /// <inheritdoc cref="ICommunicationServer"/>>
     public void SendChannelActivationMessage() => Send(new NotificationTransport { Message = "Initialization message", MessageType = "none" });
