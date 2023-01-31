@@ -7,7 +7,7 @@ public interface IHubClient
     /// </summary>
     /// <param name="message">The message.</param>
     /// <returns></returns>
-    Task ReceiveMessage(object message);
+    Task Message(object message);
 
     /// <summary>
     /// Sends the message.

@@ -1,7 +1,7 @@
 ﻿using BlazorWasmSignalR.Server.Workers;
 using BlazorWasmSignalR.Shared;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Options;
+using System;
 
 namespace BlazorWasmSignalR.Server.Models.Hub
 {
@@ -10,19 +10,10 @@ namespace BlazorWasmSignalR.Server.Models.Hub
         #region Fields
         // definire gruppi dinamici
 
-        private SimpleWorker worker;
+        //private SimpleWorker worker;
         #endregion
 
         #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommunicationHub" /> class.
-        /// </summary>
-        //public CommunicationHub(SimpleWorker worker)
-        //{
-        //    this.worker = worker;
-        //    _ = this.worker.ExecuteAsync(new CancellationToken());
-        //}
 
         #endregion
 
@@ -38,8 +29,13 @@ namespace BlazorWasmSignalR.Server.Models.Hub
         /// Receives the message.
         /// </summary>
         /// <param name="message">The message.</param>
-        public async Task ReceiveMessage(object message) => await Clients.All.ReceiveMessage(message);
+        public async Task Message(object message) => await Clients.All.Message(message);
 
         #endregion
+
+        public override async Task OnConnectedAsync()
+        {
+            await base.OnConnectedAsync();
+        }
     }
 }

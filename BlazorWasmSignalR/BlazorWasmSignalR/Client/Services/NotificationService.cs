@@ -10,7 +10,7 @@ namespace BlazorWasmSignalR.Client.Services;
 public class NotificationService
 {
     #region Fields
-    private readonly string hubEndpoint = "https://localhost:5001/communicationhub";
+    private readonly string hubEndpoint = "https://localhost:7273/communicationhub";
 
     private const string TestEndpoint = "/api/v1/Test";
 
@@ -54,7 +54,7 @@ public class NotificationService
 
     #region Events    
 
-    public event EventHandler<int?>? AxesOverrideSafetyLimitRatioChanged;
+    public event EventHandler<string?>? MessageChanged;
     #endregion
 
     #region Constructors
@@ -63,9 +63,12 @@ public class NotificationService
     {
         NavManager = navManager;
         Http = http;
-        _ = InitializeNotifications();
+        
         Task.Run(async() =>
         {
+            await Task.Delay(2000);
+            _ = InitializeNotifications();
+            await Task.Delay(2000);
             await TestHttpGet();
         });
     }
@@ -77,6 +80,7 @@ public class NotificationService
     {
         try
         {
+            await Task.Delay(5000);
             var ret = await Http.GetFromJsonAsync<string>(@$"{TestEndpoint}");
             if (ret is not null)
             {
@@ -108,26 +112,21 @@ public class NotificationService
     {
         IHubClient hubClientMethodsNames;
         HubConnection = new HubConnectionBuilder()
-            .WithUrl(NavManager.ToAbsoluteUri(hubEndpoint))
+            .WithUrl(new Uri("https://localhost:7273/communicationhub"))
             .WithAutomaticReconnect(reconnectionTimeouts)
             .Build();
-        _ = HubConnection.On<NotificationTransport>(nameof(hubClientMethodsNames.ReceiveMessage), context =>
+        _ = HubConnection.On<NotificationTransport>(nameof(hubClientMethodsNames.Message), context =>
         {
             Console.WriteLine("Messaging hub connection. Arrived: " + context.MessageType);
-            //if (context.MessageType != nameof(AxesFeedOverrideChanged))
-            //{
-            //    return;
-            //}
-
-            //var content = JsonSerializer.Deserialize<AxesFeedOverrideChanged>(context.Message!);
-            //if (content is not null)
-            //{
-            //    if (SafetyLimitRatio != content.SafetyLimitRatio)
-            //    {
-            //        SafetyLimitRatio = content.SafetyLimitRatio;
-            //        AxesOverrideSafetyLimitRatioChanged?.Invoke(this, SafetyLimitRatio);
-            //    }
-            //}
+            if(context.MessageType =="string")
+            {
+                var content = JsonSerializer.Deserialize<string>(context.Message!);
+                if (content is not null)
+                {
+                    MessageChanged?.Invoke(this, content);
+                }
+            }
+            MessageChanged?.Invoke(this, context.Message);
         });
         await HubConnection.StartAsync();
     }
