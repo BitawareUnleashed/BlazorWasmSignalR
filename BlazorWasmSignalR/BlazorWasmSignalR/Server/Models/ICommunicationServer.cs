@@ -12,4 +12,10 @@ public interface ICommunicationServer
     /// </summary>
     /// <param name="toSend">To send.</param>
     void Send(object toSend);
+
+    /// <summary>
+    /// Initializes the specified address.
+    /// </summary>
+    /// <param name="address">The address.</param>
+    void Init(string address);
 }

@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using BlazorWasmSignalR.Server.Workers;
+using BlazorWasmSignalR.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,15 @@ builder.Services.AddSingleton<ICommunicationServer, CommunicationServer>();
 
 builder.Services.AddSingleton<SimpleWorker>();
 
+/*------------------------------*/
+
 var app = builder.Build();
+
+
+// Start the CommunicationServer instance
+app.Services.GetRequiredService<ICommunicationServer>().Init("https://localhost:7273/communicationhub");
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -93,9 +102,5 @@ app.MapHub<CommunicationHub>("/communicationhub", options =>
 });
 app.AddTestApiEndpoints();
 
-
-
-
-
-
 app.Run();
+

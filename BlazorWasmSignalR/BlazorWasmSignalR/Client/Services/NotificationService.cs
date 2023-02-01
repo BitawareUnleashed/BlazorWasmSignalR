@@ -63,39 +63,10 @@ public class NotificationService
     {
         NavManager = navManager;
         Http = http;
-        
-        Task.Run(async() =>
-        {
-            await Task.Delay(2000);
-            _ = InitializeNotifications();
-            await Task.Delay(2000);
-            await TestHttpGet();
-        });
-    }
-    #endregion
-
-    #region Methods
-
-    public async Task TestHttpGet()
-    {
-        try
-        {
-            await Task.Delay(5000);
-            var ret = await Http.GetFromJsonAsync<string>(@$"{TestEndpoint}");
-            if (ret is not null)
-            {
-
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
     }
     #endregion
 
     #region SignalR
-
     /// <summary>
     /// Gets or sets the hub connection.
     /// </summary>
@@ -108,29 +79,29 @@ public class NotificationService
     /// Initializes the notifications from machine.
     /// </summary>
     /// <exception cref="InvalidDataException"></exception>
-    private async Task InitializeNotifications()
+    public async Task InitializeNotifications()
     {
         IHub hubClientMethodsNames;
         HubConnection = new HubConnectionBuilder()
             .WithUrl(new Uri("https://localhost:7273/communicationhub"))
             .WithAutomaticReconnect(reconnectionTimeouts)
             .Build();
-        _ = HubConnection.On<NotificationTransport>(nameof(hubClientMethodsNames.Message), context =>
-        {
-            Console.WriteLine("Messaging hub connection. Arrived: " + context.MessageType);
-            if(context.MessageType =="string")
-            {
-                var content = JsonSerializer.Deserialize<string>(context.Message!);
-                if (content is not null)
-                {
-                    MessageChanged?.Invoke(this, content + " - Service");
-                }
-            }
-            MessageChanged?.Invoke(this, context.Message + " - Service");
-        });
+        _ = HubConnection.On<NotificationTransport>(nameof(hubClientMethodsNames.Message), StringMessage);
         await HubConnection.StartAsync();
     }
 
+    private void StringMessage(NotificationTransport context)
+    {
+        Console.WriteLine("Messaging hub connection. Arrived: " + context.MessageType);
+        if (context.MessageType == "string")
+        {
+            var content = JsonSerializer.Deserialize<string>(context.Message!);
+            if (content is not null)
+            {
+                MessageChanged?.Invoke(this, content + " - Service");
+            }
+        }
+    }
     #endregion
 }
 

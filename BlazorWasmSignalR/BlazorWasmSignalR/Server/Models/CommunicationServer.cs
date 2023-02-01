@@ -16,7 +16,6 @@ public class CommunicationServer : ICommunicationServer
     public CommunicationServer(SimpleWorker worker)
     {
         this.worker = worker;
-        Init("https://localhost:7273/communicationhub");
     }
     #endregion
 
@@ -49,7 +48,7 @@ public class CommunicationServer : ICommunicationServer
     /// Initializes the SignalR connection with a configuration base address.
     /// </summary>
     /// <param name="baseAddress">The base address.</param>
-    private async void Init(string baseAddress)
+    public async void Init(string baseAddress)
     {
         hubConnection = new HubConnectionBuilder()
                        .WithUrl(new Uri(baseAddress))

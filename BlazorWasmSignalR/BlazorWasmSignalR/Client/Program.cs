@@ -1,4 +1,5 @@
 using BlazorWasmSignalR.Client;
+using BlazorWasmSignalR.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

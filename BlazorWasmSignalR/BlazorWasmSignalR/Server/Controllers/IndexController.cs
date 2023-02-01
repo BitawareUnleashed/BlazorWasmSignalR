@@ -16,7 +16,7 @@ public static class IndexController
 
     internal static IResult GetLightsConfigurationApi(ICommunicationServer server)
     {
-        server.SendChannelActivationMessage();
+        //server.SendChannelActivationMessage();
         return Results.Ok();
     }
 }

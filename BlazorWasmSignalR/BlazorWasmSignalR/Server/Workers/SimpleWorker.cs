@@ -22,9 +22,9 @@ public class SimpleWorker
             await Task.Delay(1000, stoppingToken);
             hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
             {
-                Message = "My message",
-                MessageType = "MESSAGE"
-            });
+                Message = DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + " - " + DateTime.Now.Second.ToString("00"),
+                MessageType = "TIME"
+            });; ;
         }
     }
 }
