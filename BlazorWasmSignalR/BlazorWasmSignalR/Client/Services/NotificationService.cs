@@ -54,7 +54,7 @@ public class NotificationService
 
     #region Events    
 
-    public event EventHandler<string?>? MessageChanged;
+    public event EventHandler<Article>? MessageChanged;
     #endregion
 
     #region Constructors
@@ -81,27 +81,28 @@ public class NotificationService
     /// <exception cref="InvalidDataException"></exception>
     public async Task InitializeNotifications()
     {
-        IHub hubClientMethodsNames;
         HubConnection = new HubConnectionBuilder()
             .WithUrl(new Uri("https://localhost:7273/communicationhub"))
             .WithAutomaticReconnect(reconnectionTimeouts)
             .Build();
-        _ = HubConnection.On<NotificationTransport>(nameof(hubClientMethodsNames.Message), StringMessage);
+        _ = HubConnection.On<NotificationTransport>(nameof(IHub.Message), StringMessage);
         await HubConnection.StartAsync();
     }
 
     private void StringMessage(NotificationTransport context)
     {
         Console.WriteLine("Messaging hub connection. Arrived: " + context.MessageType);
-        if (context.MessageType == "string")
+        if (context.MessageType == nameof(Article))
         {
-            var content = JsonSerializer.Deserialize<string>(context.Message!);
+            var content = JsonSerializer.Deserialize<Article>(context.Message!);
             if (content is not null)
             {
-                MessageChanged?.Invoke(this, content + " - Service");
+                MessageChanged?.Invoke(this, content);
             }
         }
     }
     #endregion
 }
+
+
 

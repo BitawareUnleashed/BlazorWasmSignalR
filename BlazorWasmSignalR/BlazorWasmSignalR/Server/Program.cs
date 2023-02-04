@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using BlazorWasmSignalR.Server.Workers;
 using BlazorWasmSignalR.Client.Services;
+using BlazorWasmSignalR.Shared.Models;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,7 @@ builder.Services.AddCors(policy =>
                                .WithExposedHeaders("X-Pagination"));
 });
 
+//builder.Services.Configure<NewsApiKey>(options => builder.Configuration.GetSection("NewsApiKey").Bind(options));
 
 builder.Services.AddSignalR(
     hubOptions =>
@@ -52,7 +56,6 @@ builder.Services.AddSignalR(
     });
 
 
-
 builder.Services.AddSingleton<ICommunicationServer, CommunicationServer>();
 
 builder.Services.AddSingleton<SimpleWorker>();
@@ -60,7 +63,6 @@ builder.Services.AddSingleton<SimpleWorker>();
 /*------------------------------*/
 
 var app = builder.Build();
-
 
 // Start the CommunicationServer instance
 app.Services.GetRequiredService<ICommunicationServer>().Init("https://localhost:7273/communicationhub");

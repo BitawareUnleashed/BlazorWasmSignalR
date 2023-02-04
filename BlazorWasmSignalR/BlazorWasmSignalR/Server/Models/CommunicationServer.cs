@@ -11,11 +11,16 @@ namespace BlazorWasmSignalR.Server.Models;
 public class CommunicationServer : ICommunicationServer
 {
     SimpleWorker worker;
+    string apiKey=string.Empty;
+    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
     #region Constructor
-    public CommunicationServer(SimpleWorker worker)
+    public CommunicationServer(SimpleWorker worker, IConfiguration configuration)//, NewsApiKey apiKey)
     {
         this.worker = worker;
+        apiKey = configuration["NewsApiKey"];
+        if (apiKey == null ) { }
+        //this.apiKey = apiKey;
     }
     #endregion
 
@@ -55,8 +60,9 @@ public class CommunicationServer : ICommunicationServer
                        .WithAutomaticReconnect(reconnectionTimeouts)
                        .Build();
         await hubConnection.StartAsync();
-        this.worker.SetHub(hubConnection);
-        await worker.ExecuteAsync(new CancellationToken());
+        this.worker.SetHub(hubConnection, apiKey);
+        worker.ExecuteAsync(cancellationTokenSource.Token);
+        await worker.GetNews(cancellationTokenSource.Token);
     }
 
     /// <inheritdoc cref="ICommunicationServer"/>>
