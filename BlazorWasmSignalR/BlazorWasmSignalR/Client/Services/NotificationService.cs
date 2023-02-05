@@ -86,8 +86,23 @@ public class NotificationService
             .WithAutomaticReconnect(reconnectionTimeouts)
             .Build();
         _ = HubConnection.On<NotificationTransport>(nameof(IHub.Message), StringMessage);
+        _ = HubConnection.On<string>(nameof(IHub.GetId), GetMyId);
         await HubConnection.StartAsync();
+
+        await HubConnection.SendAsync(nameof(IHub.AddClientToGroup),"NEWS");
+
+        //await HubConnection.SendAsync(nameof(IHub.Message), new NotificationTransport()
+        //{
+        //    Message="",
+        //    MessageType="ID"
+        //});
     }
+
+    private void GetMyId(object context)
+    {
+        Console.WriteLine("Messaging hub connection. Arrived: " + context);
+    }
+
 
     private void StringMessage(NotificationTransport context)
     {

@@ -24,17 +24,23 @@ public class SimpleWorker
 
     public void ExecuteAsync(CancellationToken stoppingToken)
     {
-        Task.Run(async() =>
+        Task.Run(async () =>
         {
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(1000, stoppingToken);
 
-                hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                _ = hubConnection?.SendAsync("SendToGroup", "TIME", new NotificationTransport()
                 {
                     Message = DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + " - " + DateTime.Now.Second.ToString("00"),
                     MessageType = "TIME"
                 });
+
+                //hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                //{
+                //    Message = DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + " - " + DateTime.Now.Second.ToString("00"),
+                //    MessageType = "TIME"
+                //});
             }
         });
 
@@ -66,11 +72,20 @@ public class SimpleWorker
                 {
                     await Task.Delay(15000, stoppingToken);
                     var serializedArticle = JsonConvert.SerializeObject(item);
-                    hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+
+                    _ = hubConnection?.SendAsync("SendToGroup", "NEWS", new NotificationTransport()
                     {
                         Message = serializedArticle,
                         MessageType = nameof(Article)
                     });
+
+
+
+                    //hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                    //{
+                    //    Message = serializedArticle,
+                    //    MessageType = nameof(Article)
+                    //});
                 }
             }
 
