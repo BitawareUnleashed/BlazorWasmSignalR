@@ -37,15 +37,17 @@ public class SimpleWorker
             // Add to group
             await hubConnection.SendAsync("AddClientToGroup", "TIME20");
 
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME20", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
 
@@ -56,16 +58,17 @@ public class SimpleWorker
                 .Build();
             await hubConnection.StartAsync();
 
-
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME1", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -75,15 +78,17 @@ public class SimpleWorker
                 .Build();
             await hubConnection.StartAsync();
 
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME2", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -92,15 +97,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME3", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -109,15 +117,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME4", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -126,15 +137,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME5", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -143,15 +157,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME6", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -160,15 +177,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME7", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -177,15 +197,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME8", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -194,15 +217,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME9", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -211,15 +237,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME10", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -228,15 +257,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME11", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -245,15 +277,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME12", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -262,15 +297,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME13", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -279,15 +317,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME14", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -296,15 +337,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME15", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -313,15 +357,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME16", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -330,15 +377,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME17", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -347,15 +397,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME18", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         Task.Run(async () =>
@@ -364,15 +417,18 @@ public class SimpleWorker
                 .WithUrl(new Uri(baseAddress))
                 .Build();
             await hubConnection.StartAsync();
+
+            var i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(50, stoppingToken);
 
                 _ = hubConnection?.SendAsync("SendToGroup", "TIME19", new NotificationTransport()
                 {
-                    Message = Guid.NewGuid().ToString(),
+                    Message = i++.ToString(),
                     MessageType = "TIME"
                 }, stoppingToken);
+                if (i > 010000) i = 0;
             }
         });
         //Task.Run(async () =>
@@ -426,7 +482,7 @@ public class SimpleWorker
             {
                 foreach (var item in news.articles)
                 {
-                    await Task.Delay(505000, stoppingToken);
+                    await Task.Delay(55000, stoppingToken);
                     var serializedArticle = JsonConvert.SerializeObject(item);
 
                     _ = hubConnection1?.SendAsync("SendToGroup", "NEWS", new NotificationTransport()
