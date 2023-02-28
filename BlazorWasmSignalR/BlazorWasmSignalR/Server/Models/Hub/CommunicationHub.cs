@@ -1,41 +1,54 @@
-﻿using BlazorWasmSignalR.Server.Workers;
-using BlazorWasmSignalR.Shared;
+﻿using BlazorWasmSignalR.Shared;
 using BlazorWasmSignalR.Shared.Models;
 using Microsoft.AspNetCore.SignalR;
-using System;
 
 namespace BlazorWasmSignalR.Server.Models.Hub;
 
 public class CommunicationHub : Hub<IHub>
 {
-    public static List<string> ClientsList { get; set; }=new List<string>();
+    public static List<string> ClientsList { get; set; } = new List<string>();
 
-    public async Task Message(object message) => await Clients.All.Message(message);
+    /// <summary>
+    /// Messages the specified message.
+    /// </summary>
+    /// <param name="message">The message.</param>
+    public async Task Message(object message) => await Clients.All.SendMessage(message);
 
-    public async Task GetId(object id)
-    {
-        await Clients.Caller.GetId(Context.ConnectionId);
-    }
+    /// <summary>
+    /// Gets the identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    public async Task GetId(object id) => await Clients.Caller.GetId(Context.ConnectionId);
 
-    #region GROUPS
-    public async Task SendToGroup(string groupName, NotificationTransport message)
-    {
-        await Clients.Group(groupName).Message(message);
-    }
 
-    public async Task AddClientToGroup(string groupName)
-    {
-        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-    }
+    #region GROUPS    
+    /// <summary>
+    /// Sends to group.
+    /// </summary>
+    /// <param name="groupName">Name of the group.</param>
+    /// <param name="message">The message.</param>
+    public async Task SendToGroup(string groupName, NotificationTransport message) => await Clients.Group(groupName).SendMessage(message);
 
+    /// <summary>
+    /// Adds the client to group.
+    /// </summary>
+    /// <param name="groupName">Name of the group.</param>
+    public async Task AddClientToGroup(string groupName) => await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+
+    /// <summary>
+    /// Removes the client to group.
+    /// </summary>
+    /// <param name="groupName">Name of the group.</param>
     public async Task RemoveClientToGroup(string groupName)
     {
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-        await Clients.Client(Context.ConnectionId).Message("Removed from group");
+        await Clients.Client(Context.ConnectionId).SendMessage("Removed from group");
     }
     #endregion
 
-
+    /// <summary>
+    /// Called when a new connection is established with the hub.
+    /// </summary>
     public override async Task OnConnectedAsync()
     {
         await Clients.Caller.GetId(Context.ConnectionId.ToString());
@@ -43,6 +56,13 @@ public class CommunicationHub : Hub<IHub>
         await base.OnConnectedAsync();
     }
 
+    /// <summary>
+    /// Called when a connection with the hub is terminated.
+    /// </summary>
+    /// <param name="exception"></param>
+    /// <returns>
+    /// A <see cref="T:System.Threading.Tasks.Task" /> that represents the asynchronous disconnect.
+    /// </returns>
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         ClientsList.Remove(Context.ConnectionId);

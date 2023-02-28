@@ -19,8 +19,6 @@ public class CommunicationServer : ICommunicationServer
     {
         this.worker = worker;
         apiKey = configuration["NewsApiKey"];
-        if (apiKey == null ) { }
-        //this.apiKey = apiKey;
     }
     #endregion
 
@@ -60,13 +58,13 @@ public class CommunicationServer : ICommunicationServer
                        .WithAutomaticReconnect(reconnectionTimeouts)
                        .Build();
         await hubConnection.StartAsync();
-        this.worker.SetHub(hubConnection, apiKey);
+        this.worker.SetHub(hubConnection, apiKey, baseAddress);
         worker.ExecuteAsync(cancellationTokenSource.Token);
         await worker.GetNews(cancellationTokenSource.Token);
     }
 
     /// <inheritdoc cref="ICommunicationServer"/>>
-    public void Send(object toSend) => hubConnection?.SendAsync(nameof(IHub.Message), toSend);
+    public void Send(object toSend) => hubConnection?.SendAsync(nameof(IHub.SendMessage), toSend);
 
     /// <inheritdoc cref="ICommunicationServer"/>>
     public void SendChannelActivationMessage() => Send(new NotificationTransport { Message = "Initialization message", MessageType = "none" });

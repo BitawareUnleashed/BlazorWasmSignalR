@@ -85,15 +85,15 @@ public class NotificationService
             .WithUrl(new Uri("https://localhost:7273/communicationhub"))
             .WithAutomaticReconnect(reconnectionTimeouts)
             .Build();
-        _ = HubConnection.On<NotificationTransport>(nameof(IHub.Message), StringMessage);
+        _ = HubConnection.On<NotificationTransport>(nameof(IHub.SendMessage), StringMessage);
         _ = HubConnection.On<string>(nameof(IHub.GetId), GetMyId);
         await HubConnection.StartAsync();
 
         await HubConnection.SendAsync(nameof(IHub.AddClientToGroup),"NEWS");
 
-        //await HubConnection.SendAsync(nameof(IHub.Message), new NotificationTransport()
+        //await HubConnection.SendAsync(nameof(IHub.SendMessage), new NotificationTransport()
         //{
-        //    Message="",
+        //    SendMessage="",
         //    MessageType="ID"
         //});
     }

@@ -10,7 +10,7 @@ public interface IHub
     /// </summary>
     /// <param name="message">The message.</param>
     /// <returns></returns>
-    Task Message(object message);
+    Task SendMessage(object message);
 
     Task GetId(object id);
 
