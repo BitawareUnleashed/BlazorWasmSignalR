@@ -10,34 +10,354 @@ using System.Net;
 namespace BlazorWasmSignalR.Server.Workers;
 public class SimpleWorker
 {
-    private HubConnection? hubConnection;
+    private HubConnection? hubConnection1;
+    private HubConnection? hubConnection2;
     string apiKey;
 
+    int time = 25;
 
-    public void SetHub(HubConnection hub, string apiKey)
+    public async void SetHub(HubConnection hub, string apiKey)
     {
-        this.hubConnection = hub;
         this.apiKey = apiKey;
+        hubConnection1 = new HubConnectionBuilder()
+               .WithUrl(new Uri("https://localhost:7273/communicationhub"))
+               .Build();
+        await hubConnection1.StartAsync();
+
+        hubConnection2 = new HubConnectionBuilder()
+       .WithUrl(new Uri("https://localhost:7273/secondhub"))
+       .Build();
+        await hubConnection2.StartAsync();
+
+
+        
     }
 
     //ApiKey = app?.ServiceProvider?.GetService<IOptions<OpenWeatherMapKey>>()?.Value?.ApiKey;
 
     public void ExecuteAsync(CancellationToken stoppingToken)
     {
-        Task.Run(async() =>
+        Task.Run(async () =>
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(time, stoppingToken);
 
-                hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
                 {
                     Message = DateTime.Now.Hour.ToString("00") + ":" + DateTime.Now.Minute.ToString("00") + " - " + DateTime.Now.Second.ToString("00"),
-                    MessageType = "TIME"
+                    MessageType = "INTENSIVE1"
                 });
             }
         });
 
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE2"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE3"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE4"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE5"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE6"
+                });
+            }
+        });
+
+
+
+
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE12"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE13"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE14"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE15"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE16"
+                });
+            }
+        });
+
+
+
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE22"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE23"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE24"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE25"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE26"
+                });
+            }
+        });
+
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE32"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE33"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE34"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE35"
+                });
+            }
+        });
+
+        Task.Run(async () =>
+        {
+            int i = 0;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(time, stoppingToken);
+
+                hubConnection2?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                {
+                    Message = "DATA " + i++,
+                    MessageType = "INTENSIVE36"
+                });
+            }
+        });
     }
 
     public async Task GetNews(CancellationToken stoppingToken)
@@ -66,7 +386,7 @@ public class SimpleWorker
                 {
                     await Task.Delay(15000, stoppingToken);
                     var serializedArticle = JsonConvert.SerializeObject(item);
-                    hubConnection?.SendAsync(nameof(IHub.Message), new NotificationTransport()
+                    hubConnection1?.SendAsync(nameof(IHub.Message), new NotificationTransport()
                     {
                         Message = serializedArticle,
                         MessageType = nameof(Article)
@@ -74,7 +394,7 @@ public class SimpleWorker
                 }
             }
 
-            Console.WriteLine(json);
+            //Console.WriteLine(json);
         }
         catch (Exception e)
         {

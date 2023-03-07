@@ -102,6 +102,10 @@ app.MapHub<CommunicationHub>("/communicationhub", options =>
     options.TransportSendTimeout = TimeSpan.FromSeconds(10);
     options.WebSockets.CloseTimeout = TimeSpan.FromSeconds(3);
 });
+
+app.MapHub<SecondHub>("/secondhub");
+
+
 app.AddTestApiEndpoints();
 
 app.Run();

@@ -5,8 +5,42 @@
 @implements IAsyncDisposable
 
 
-<h1>Hello, world!</h1>
+<h1>Benvenuti alla DotNET Conf 2023!</h1>
+
 <p>Time of the day: <strong>@Watch</strong></p>
+<table>
+    <tr>
+        <td>Data: @data2</td>
+        <td>Data: @data3</td>
+        <td>Data: @data4</td>
+        <td>Data: @data5</td>
+        <td>Data: @data6</td>
+    </tr>
+
+    <tr>
+        <td>Data: @data12</td>
+        <td>Data: @data13</td>
+        <td>Data: @data14</td>
+        <td>Data: @data15</td>
+        <td>Data: @data16</td>
+    </tr>
+
+    <tr>
+        <td>Data: @data22</td>
+        <td>Data: @data23</td>
+        <td>Data: @data24</td>
+        <td>Data: @data25</td>
+        <td>Data: @data26</td>
+    </tr>
+
+    <tr>
+        <td>Data: @data32</td>
+        <td>Data: @data33</td>
+        <td>Data: @data34</td>
+        <td>Data: @data35</td>
+        <td>Data: @data36</td>
+    </tr>
+</table>
 
 @*NEWS*@
 @if (news is null)
@@ -23,7 +57,7 @@ else
             <p> <a href="@news.url" target="_blank">Leggi notizia completa</a> </p>
 
             <p></p>
-            <img src="@news.urlToImage"/>
+            <img src="@news.urlToImage" />
         </div>
 
     </div>
