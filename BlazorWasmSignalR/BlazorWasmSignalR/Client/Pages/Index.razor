@@ -1,6 +1,8 @@
 ﻿@page "/"
 @inject HttpClient Http
+@using BlazorWasmSignalR.Client.Services;
 @using Microsoft.AspNetCore.SignalR.Client
+@inject NotificationService notificationService
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
 

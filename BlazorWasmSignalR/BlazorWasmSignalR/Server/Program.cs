@@ -94,8 +94,6 @@ app.MapFallbackToFile("index.html");
 
 app.MapHub<CommunicationHub>("/communicationhub", options =>
 {
-    //options.Transports = HttpTransportType.WebSockets & HttpTransportType.LongPolling;
-    //options.CloseOnAuthenticationExpiration = false;
     options.ApplicationMaxBufferSize = 65_536;
     options.TransportMaxBufferSize = 65_536;
     options.MinimumProtocolVersion = 0;
@@ -103,10 +101,14 @@ app.MapHub<CommunicationHub>("/communicationhub", options =>
     options.WebSockets.CloseTimeout = TimeSpan.FromSeconds(3);
 });
 
-app.MapHub<SecondHub>("/secondhub");
-
-
-app.AddTestApiEndpoints();
+app.MapHub<SecondHub>("/secondhub", options =>
+{
+    options.ApplicationMaxBufferSize = 65_536;
+    options.TransportMaxBufferSize = 65_536;
+    options.MinimumProtocolVersion = 0;
+    options.TransportSendTimeout = TimeSpan.FromSeconds(10);
+    options.WebSockets.CloseTimeout = TimeSpan.FromSeconds(3);
+});
 
 app.Run();
 

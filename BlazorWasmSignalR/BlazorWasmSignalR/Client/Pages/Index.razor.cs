@@ -40,7 +40,7 @@ public partial class Index
     private string data36 = string.Empty;
 
 
-    private NotificationService? notificationService;
+    //private NotificationService? notificationService;
     protected override async Task OnInitializedAsync()
     {
         hubConnection1 = new HubConnectionBuilder()
@@ -111,9 +111,6 @@ public partial class Index
 
         hubConnection2.On<NotificationTransport>(nameof(IHub.Message), message =>
         {
-
-
-
             if (message.MessageType == "INTENSIVE22")
             {
                 data22 = message.Message ?? string.Empty;
@@ -159,7 +156,7 @@ public partial class Index
         });
         await hubConnection2.StartAsync();
 
-        notificationService = new NotificationService(NavigationManager, Http);
+        //notificationService = new NotificationService(NavigationManager, Http);
         notificationService.MessageChanged += NotificationService_MessageChanged;
         _ = notificationService.InitializeNotifications();
     }
