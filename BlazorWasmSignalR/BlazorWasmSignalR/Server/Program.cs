@@ -1,4 +1,3 @@
-using BlazorWasmSignalR.Server.Controllers;
 using BlazorWasmSignalR.Server.Models;
 using BlazorWasmSignalR.Server.Models.Hub;
 using System.Text.Encodings.Web;
